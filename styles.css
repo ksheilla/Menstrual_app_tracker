@@ -7,231 +7,167 @@
     scroll-behavior: smooth;
 }
 
-/* 🌸 Background Design - Soft Gradient + Sparkles */
+/* 🌸 Background - Soft Gradient */
 body {
-    background: linear-gradient(135deg, #ffe6f2, #ffccdd); /* Soft pink gradient */
+    background: linear-gradient(135deg, #ffe6f2, #ffccdd);
     color: #444;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    background-size: cover;
-    animation: backgroundAnimation 8s ease-in-out infinite;
 }
 
-/* 🌸 Soft Sparkling Animation in Background */
-@keyframes backgroundAnimation {
-    0% { background: linear-gradient(135deg, #ffe6f2, #ffccdd); }
-    50% { background: linear-gradient(135deg, #ffccdd, #ffe6f2); }
-    100% { background: linear-gradient(135deg, #ffe6f2, #ffccdd); }
-}
-
-/* 🌸 Main Container Styling */
+/* 🌸 Main Container */
 .container {
     background: #fff;
-    border-radius: 25px; /* Rounder edges for more elegance */
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 650px;
-    padding: 50px;
+    padding: 40px;
     text-align: center;
-    overflow: hidden;
-    transform: scale(0.98);
-    transition: transform 0.3s ease-in-out;
 }
 
-.container:hover {
-    transform: scale(1.02);
-}
-
-/* 🌸 Header Styling */
+/* 🌸 Header */
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: bold;
     color: #ff69b4;
-    margin-bottom: 25px;
-    position: relative;
+    margin-bottom: 20px;
     font-family: 'Dancing Script', cursive;
-}
-
-/* 🌸 Header Floating Animations */
-h1::before {
-    content: "🌸";
-    position: absolute;
-    left: -50px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    animation: float 4s ease-in-out infinite;
-}
-
-h1::after {
-    content: "✨";
-    position: absolute;
-    right: -50px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    animation: float 4s ease-in-out infinite reverse;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(-50%) translateX(0);
-    }
-    50% {
-        transform: translateY(-50%) translateX(15px);
-    }
 }
 
 /* 🌸 Subheadings */
 h2 {
-    font-size: 1.8rem;
-    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
     color: #ff80ab;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
 }
 
 /* 🌸 Paragraph Styling */
 p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #555;
     line-height: 1.6;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 /* 🌸 Form Styling */
 form {
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 label {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 8px;
     color: #ff69b4;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
 input[type="date"] {
     width: 100%;
-    padding: 14px;
-    margin-bottom: 20px;
+    padding: 12px;
+    margin-bottom: 15px;
     border: 2px solid #ffccdd;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 1rem;
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 input[type="date"]:focus {
     border-color: #ff69b4;
-    transform: scale(1.05);
     outline: none;
 }
+/* 🌸 Cycle History Styling */
+#cycle-history {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+}
+
+#cycle-history li {
+    background: #ffeff7;
+    border-radius: 15px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: #444;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    min-width: 120px;
+    text-align: center;
+}
+
+#cycle-history li:hover {
+    transform: scale(1.05);
+    background: #ff80ab;
+    color: #fff;
+}
+
 
 /* 🌸 Button Styling */
 button {
     background: linear-gradient(135deg, #ff69b4, #ff1493);
     color: #fff;
     border: none;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    border-radius: 25px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
     background: linear-gradient(135deg, #ff1493, #ff007f);
-    transform: scale(1.07);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* 🌸 Cycle History List */
-ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 25px;
-}
-
-li {
-    background: #ffe6f2;
-    margin-bottom: 8px;
-    padding: 15px;
-    border-radius: 20px;
-    font-size: 1.1rem;
-    color: #333;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, background 0.3s ease;
-}
-
-li:hover {
-    transform: scale(1.02);
-    background: #ff80ab;
-    color: #fff;
-}
-
-/* 🌸 Prediction Section */
-.prediction {
-    margin-top: 25px;
-    padding: 20px;
-    background: #fff0f6;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.prediction:hover {
-    transform: scale(1.05);
-    background: #ff80ab;
-    color: #fff;
-}
-
-/* 🌸 Elegant Footer Styling */
+/* 🌸 Footer */
 footer {
     position: fixed;
-    bottom: 20px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: auto;
     text-align: center;
-    font-size: 1.4rem;
-    font-family: 'Dancing Script', cursive;
-    color: #ff1493;
-    background: linear-gradient(135deg, #ffe6f2, #ff80ab);
-    padding: 15px 25px;
-    border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(255, 20, 147, 0.2);
-    transition: all 0.3s ease-in-out;
-    letter-spacing: 1px;
-    animation: floaty 5s ease-in-out infinite alternate;
-}
-
-/* Floating Effect */
-@keyframes floaty {
-    0% { transform: translateX(-50%) translateY(0); }
-    100% { transform: translateX(-50%) translateY(-7px); }
-}
-
-/* Footer Hover Effect */
-footer:hover {
-    background: linear-gradient(135deg, #ff80ab, #ff1493);
+    font-size: 1rem;
     color: #fff;
-    transform: translateX(-50%) scale(1.07);
-    box-shadow: 0 15px 40px rgba(255, 20, 147, 0.3);
+    background: linear-gradient(135deg, #ff80ab, #ff1493);
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(255, 20, 147, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Copyright text */
+.footer-text {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* 🌸 Social Icons */
+.social-icons a {
+    color: #fff;
+    font-size: 1.2rem;
+    margin: 0 5px;
+    transition: opacity 0.3s ease;
+}
+
+.social-icons a:hover {
+    opacity: 0.7;
 }
 
 /* 🌸 Responsive Design */
 @media (max-width: 768px) {
     .container {
-        width: 95%;
-        padding: 40px;
+        width: 90%;
+        padding: 30px;
     }
 
     h1 {
@@ -239,16 +175,11 @@ footer:hover {
     }
 
     h2 {
-        font-size: 1.5rem;
-    }
-
-    button {
-        font-size: 1rem;
-        padding: 12px 25px;
+        font-size: 1.4rem;
     }
 
     footer {
-        font-size: 1.2rem;
-        padding: 12px 18px;
+        font-size: 0.9rem;
+        padding: 8px 15px;
     }
 }
