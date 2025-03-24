@@ -1,0 +1,185 @@
+/* 🌸 General Reset 🌸 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* 🌸 Background - Soft Gradient */
+body {
+    background: linear-gradient(135deg, #ffe6f2, #ffccdd);
+    color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* 🌸 Main Container */
+.container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 650px;
+    padding: 40px;
+    text-align: center;
+}
+
+/* 🌸 Header */
+h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #ff69b4;
+    margin-bottom: 20px;
+    font-family: 'Dancing Script', cursive;
+}
+
+/* 🌸 Subheadings */
+h2 {
+    font-size: 1.6rem;
+    color: #ff80ab;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* 🌸 Paragraph Styling */
+p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* 🌸 Form Styling */
+form {
+    margin-top: 25px;
+}
+
+label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #ff69b4;
+    font-weight: bold;
+}
+
+input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #ffccdd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="date"]:focus {
+    border-color: #ff69b4;
+    outline: none;
+}
+/* 🌸 Cycle History Styling */
+#cycle-history {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+}
+
+#cycle-history li {
+    background: #ffeff7;
+    border-radius: 15px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: #444;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    min-width: 120px;
+    text-align: center;
+}
+
+#cycle-history li:hover {
+    transform: scale(1.05);
+    background: #ff80ab;
+    color: #fff;
+}
+
+
+/* 🌸 Button Styling */
+button {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #ff1493, #ff007f);
+}
+
+/* 🌸 Footer */
+footer {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    text-align: center;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(135deg, #ff80ab, #ff1493);
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(255, 20, 147, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Copyright text */
+.footer-text {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* 🌸 Social Icons */
+.social-icons a {
+    color: #fff;
+    font-size: 1.2rem;
+    margin: 0 5px;
+    transition: opacity 0.3s ease;
+}
+
+.social-icons a:hover {
+    opacity: 0.7;
+}
+
+/* 🌸 Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 30px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    footer {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+}
