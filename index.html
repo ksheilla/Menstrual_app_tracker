@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menstrual Cycle Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Menstrual Cycle Tracker ✨</h1>
+
+        <p>Track your menstrual cycle and get personalized recommendations.</p>
+        <p><a href="/recommendations/menstruation">View Food Recommendations for Menstruation</a></p>
+        <form id="cycle-form">
+            <label for="start_date">Enter Start Date of Last Period:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            <button type="submit">Add Entry</button>
+        </form>
+
+        <h2>🌸 Cycle History 🌸</h2>
+        <ul id="cycle-history">Click a date to remove it.</ul>
+
+        <h2>🔮 Predicted Next Period 🔮</h2>
+        <p id="next-period">No prediction available yet.</p>
+
+        <div id="recommendations"></div>
+
+<script>
+    const phase = "menstruation"; // Replace with the user's current phase
+    fetch(`/recommendations/${phase}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("recommendations").innerHTML = `<p>${data.error}</p>`;
+            } else {
+                let html = "<ul>";
+                data.forEach(recipe => {
+                    html += `<li>${recipe.title}</li>`;
+                });
+                html += "</ul>";
+                document.getElementById("recommendations").innerHTML = html;
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching recommendations:", error);
+            document.getElementById("recommendations").innerHTML = "<p>Failed to fetch recommendations.</p>";
+        });
+</script>
+    </div>
+
+    <footer>
+        Made with ❤️ by Sheilla
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="Menstrual_app_tracker/javascript.js"></script>
+</body>
+</html>
