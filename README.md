@@ -4,6 +4,7 @@ This README provides instructions for setting up, deploying, and testing the app
 
 Features
 Cycle Tracking : Users can log their menstrual cycle data.
+
 Phase-Based Recommendations : Food recommendations tailored to the user's current phase (e.g., iron-rich foods for menstruation).
 API Integration : Fetches recipes from the Spoonacular API.
 Scalable Deployment : Configured with a load balancer to handle high traffic efficiently.
