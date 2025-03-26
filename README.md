@@ -16,3 +16,5 @@ API : Spoonacular API for food recommendations
 Web Server : Nginx or HAProxy as the load balancer
 Deployment : Ubuntu-based servers (Web01, Web02) with SSH key-based authentication
 Styling : Custom CSS for a clean and modern design
+How it is used:
+you input the two last dates you got your periods(if you input only one date a message will be displayed saying that there isn't enoug data for a prediction),the two dates or more will be stored in the cycle history.In case you want to remove one date on the cycle history,you simply click on it.After inputing the dates;the app will then give you an accurate predictions.
