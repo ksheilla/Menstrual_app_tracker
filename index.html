@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menstrual Cycle Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Menstrual Cycle Tracker ✨</h1>
+        <p>Track your menstrual cycle and get personalized recommendations.</p>
+        
+        <!-- Add a phase selector -->
+        <select id="phase-select">
+            <option value="menstruation">Menstruation</option>
+            <option value="follicular">Follicular</option>
+            <option value="ovulation">Ovulation</option>
+            <option value="luteal">Luteal</option>
+        </select>
+        <form id="cycle-form">
+            <label for="start_date">Enter Start Date of Last Period:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            <button type="submit">Add Entry</button>
+        </form>
+
+        <h2>🌸 Cycle History 🌸</h2>
+        <div id="cycle-history-container">
+            <ul id="cycle-history"> <!-- Dates will be added dynamically here --> </ul>
+        </div>
+
+        <h2>🔮 Predicted Next Period 🔮</h2>
+        <p id="next-period">No prediction available yet.</p>
+
+        <div id="recommendations"></div>
+
+        <script>
+            const phase = "menstruation"; // Replace with the user's current phase
+            fetch(`http://127.0.0.1:5000/recommendations/${phase}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("recommendations").innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        let html = "<ul>";
+                        data.forEach(recipe => {
+                            html += `<li>${recipe.title}</li>`;
+                        });
+                        html += "</ul>";
+                        document.getElementById("recommendations").innerHTML = html;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching recommendations:", error);
+                    document.getElementById("recommendations").innerHTML = "<p>Failed to fetch recommendations.</p>";
+                });
+        </script>
+    </div>
+
+    <!-- 🌸 Footer with Copyright & Social Links 🌸 -->
+    <footer>
+        <span class="footer-text">© 2024 Sheilla</span>
+        <div class="social-icons">
+            <a href="https://twitter.com/yourprofile" target="_blank">🐦</a>
+            <a href="https://instagram.com/yourprofile" target="_blank">📸</a>
+            <a href="https://linkedin.com/in/yourprofile" target="_blank">💼</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="javascript.js"></script>
+
+        <!-- Rest of your existing HTML -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const phaseSelect = document.getElementById('phase-select');
+            const recommendationsDiv = document.getElementById('recommendations');
+
+            function fetchRecommendations() {
+                const phase = phaseSelect.value;
+                fetch(`/recommendations/${phase}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            recommendationsDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            let html = `<h3>Recommended Recipes for ${phase} Phase</h3>`;
+                            if (data.length === 0) {
+                                html += '<p>No recipes found.</p>';
+                            } else {
+                                html += '<div class="recipe-grid">';
+                                data.forEach(recipe => {
+                                    html += `
+                                        <div class="recipe-card">
+                                            <h4>${recipe.title}</h4>
+                                            <img src="${recipe.image}" alt="${recipe.title}">
+                                            <p>Ready in: ${recipe.readyInMinutes} minutes</p>
+                                            <a href="${recipe.sourceUrl}" target="_blank">View Recipe</a>
+                                        </div>
+                                    `;
+                                });
+                                html += '</div>';
+                            }
+                            recommendationsDiv.innerHTML = html;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        recommendationsDiv.innerHTML = `<p>Error fetching recommendations: ${error.message}</p>`;
+                    });
+            }
+
+            // Initial fetch
+            fetchRecommendations();
+
+            // Add event listener for phase changes
+            phaseSelect.addEventListener('change', fetchRecommendations);
+        });
+    </script>
+</body>
+</html>
