@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Menstrual Cycle Tracker ✨</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <h1>🌸 Menstrual Cycle Tracker ✨</h1>
+        <p>Track your menstrual cycle and get personalized recommendations.</p>
+
+        <!-- Phase Selector -->
+        <label for="phase-select">Select Your Current Phase:</label>
+        <select id="phase-select">
+            <option value="menstruation">Menstruation</option>
+            <option value="follicular">Follicular</option>
+            <option value="ovulation">Ovulation</option>
+            <option value="luteal">Luteal</option>
+        </select>
+
+        <!-- Log Cycle Form -->
+        <form id="cycle-form">
+            <label for="start_date">Log Start Date of Last Period:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            <button type="submit">Log Entry</button>
+        </form>
+
+        <!-- Cycle History -->
+        <h2>🌸 Cycle History 🌸</h2>
+        <div id="cycle-history-container">
+            <ul id="cycle-history">
+                <!-- Logged dates will be dynamically added here -->
+            </ul>
+        </div>
+
+        <!-- Predicted Next Period -->
+        <h2>🔮 Predicted Next Period 🔮</h2>
+        <p id="next-period">No prediction available yet.</p>
+
+        <!-- Food Recommendations -->
+        <h2>🍴 Food Recommendations 🍴</h2>
+        <div id="recommendations">
+            <!-- Recommendations will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <span class="footer-text">© 2024 Sheilla</span>
+        <div class="social-icons">
+            <a href="https://twitter.com/yourprofile" target="_blank">🐦</a>
+            <a href="https://instagram.com/yourprofile" target="_blank">📸</a>
+            <a href="https://linkedin.com/in/yourprofile" target="_blank">💼</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const phaseSelect = document.getElementById('phase-select');
+            const recommendationsDiv = document.getElementById('recommendations');
+            const cycleHistoryList = document.getElementById('cycle-history');
+            const nextPeriodElement = document.getElementById('next-period');
+
+            // Fetch logged cycle data from the server
+            function fetchCycleData() {
+                fetch('/log-cycle')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error('Error fetching cycle data:', data.error);
+                        } else {
+                            // Update cycle history
+                            cycleHistoryList.innerHTML = '';
+                            data.forEach(date => {
+                                const li = document.createElement('li');
+                                li.textContent = date;
+                                cycleHistoryList.appendChild(li);
+                            });
+
+                            // Update predicted next period
+                            const nextPeriod = predictNextPeriod(data);
+                            nextPeriodElement.textContent = nextPeriod || 'No prediction available yet.';
+                        }
+                    })
+                    .catch(error => console.error('Error fetching cycle data:', error));
+            }
+
+            // Function to log a new cycle date
+            document.getElementById('cycle-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const startDate = document.getElementById('start_date').value;
+
+                fetch('/log-cycle', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ date: startDate })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(`Error: ${data.error}`);
+                        } else {
+                            alert('Cycle logged successfully!');
+                            fetchCycleData(); // Refresh cycle data
+                        }
+                    })
+                    .catch(error => console.error('Error logging cycle:', error));
+            });
+
+            // Fetch food recommendations based on selected phase
+            function fetchRecommendations() {
+                const phase = phaseSelect.value;
+
+                fetch(`/recommendations/${phase}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            recommendationsDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                        } else {
+                            let html = `<h3>Recommended Recipes for ${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase</h3>`;
+                            if (data.length === 0) {
+                                html += '<p>No recipes found.</p>';
+                            } else {
+                                html += '<div class="recipe-grid">';
+                                data.forEach(recipe => {
+                                    html += `
+                                        <div class="recipe-card">
+                                            <h4>${recipe.title}</h4>
+                                            <img src="${recipe.image}" alt="${recipe.title}">
+                                            <p>Ready in: ${recipe.readyInMinutes} minutes</p>
+                                            <a href="${recipe.sourceUrl}" target="_blank">View Recipe</a>
+                                        </div>
+                                    `;
+                                });
+                                html += '</div>';
+                            }
+                            recommendationsDiv.innerHTML = html;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching recommendations:', error);
+                        recommendationsDiv.innerHTML = `<p>Error fetching recommendations: ${error.message}</p>`;
+                    });
+            }
+
+            // Initial fetches
+            fetchCycleData();
+            fetchRecommendations();
+
+            // Add event listener for phase changes
+            phaseSelect.addEventListener('change', fetchRecommendations);
+        });
+
+        // Helper function to predict the next period
+        function predictNextPeriod(data) {
+            if (data.length < 2) return null;
+
+            const cycleLengths = data
+                .map((date, i) => i > 0 ? 
+                    (new Date(date) - new Date(data[i - 1])) / (1000 * 60 * 60 * 24) : 
+                    null)
+                .filter(length => length !== null);
+
+            const avgCycleLength = cycleLengths.reduce((sum, length) => sum + length, 0) / cycleLengths.length;
+            const lastPeriod = new Date(data[data.length - 1]);
+            const nextPeriod = new Date(lastPeriod.setDate(lastPeriod.getDate() + avgCycleLength));
+
+            return nextPeriod.toISOString().split('T')[0];
+        }
+    </script>
+</body>
+</html>
